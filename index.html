@@ -76,6 +76,28 @@
         text-transform: uppercase;
         color: rgba(255, 255, 255, 0.7);
       }
+
+      @media (max-width: 640px) {
+        .hero {
+          padding: 2rem;
+        }
+
+        .hero img {
+          position: relative;
+          inset: initial;
+          width: min(100%, 520px);
+          height: auto;
+          object-fit: contain;
+          object-position: center;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+        }
+
+        footer {
+          font-size: 1rem;
+          letter-spacing: 0.3em;
+          margin-bottom: 2rem;
+        }
+      }
     </style>
   </head>
   <body>
