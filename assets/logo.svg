@@ -1,0 +1,26 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3c1a46" />
+      <stop offset="100%" stop-color="#c58f49" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="1200" rx="160" fill="#050505" />
+  <circle cx="600" cy="600" r="480" fill="url(#g)" opacity="0.25" />
+  <path
+    d="M380 870V330h250c130 0 220 80 220 200 0 92-48 155-128 180l132 160H760L640 720H500v150H380Zm120-250h120c68 0 110-36 110-90s-42-90-110-90H500v180Z"
+    fill="#f9f6ef"
+  />
+  <text
+    x="50%"
+    y="1020"
+    text-anchor="middle"
+    font-size="120"
+    letter-spacing="0.6em"
+    fill="#f9f6ef"
+    font-family="Helvetica Neue, Arial, sans-serif"
+  >
+    RAAV
+  </text>
+</svg>
+
