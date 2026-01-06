@@ -8,9 +8,15 @@ import { PortableText } from '@portabletext/react'
 import type { Product } from '@/types/product'
 
 async function getHomepageData() {
-  const homepage = await client.fetch(homepageQuery)
-  const featuredProducts = await client.fetch(featuredProductsQuery)
-  return { homepage, featuredProducts }
+  try {
+    const homepage = await client.fetch(homepageQuery)
+    const featuredProducts = await client.fetch(featuredProductsQuery)
+    return { homepage, featuredProducts }
+  } catch (error) {
+    console.error('Error fetching homepage data:', error)
+    // Return empty data if fetch fails (e.g., missing env vars or network issue)
+    return { homepage: null, featuredProducts: [] }
+  }
 }
 
 export default async function Home() {
