@@ -1,0 +1,11 @@
+{
+  "root": true,
+  "project": {
+    "name": "raav-ecommerce"
+  },
+  "api": {
+    "projectId": "${NEXT_PUBLIC_SANITY_PROJECT_ID}",
+    "dataset": "${NEXT_PUBLIC_SANITY_DATASET}"
+  }
+}
+
