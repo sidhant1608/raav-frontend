@@ -1,29 +1,17 @@
 #!/bin/bash
 
 # Script to deploy Sanity Studio to sanity.studio
-# This temporarily switches to the standalone config for deployment
+# Since we're using standalone studio only, we can deploy directly
 
 set -e
 
-echo "🔄 Switching to standalone studio config..."
-
-# Backup the embedded config
-cp sanity.config.ts sanity.config.embedded.ts.bak
-
-# Use standalone config for deployment
-cp sanity.config.standalone.ts sanity.config.ts
-
-echo "✅ Config switched. Deploying studio..."
+echo "🚀 Deploying Sanity Studio to sanity.studio..."
 echo ""
 
-# Deploy
+# Deploy directly - no config switching needed
 npx sanity deploy
 
 echo ""
-echo "🔄 Restoring embedded studio config..."
-
-# Restore the embedded config
-mv sanity.config.embedded.ts.bak sanity.config.ts
-
-echo "✅ Done! Studio deployed and config restored."
+echo "✅ Studio deployed successfully!"
+echo "🌐 Access at: https://raav.sanity.studio/"
 
