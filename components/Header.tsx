@@ -38,27 +38,30 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Cart Icon */}
-          <Link
-            href="/cart"
-            className="relative flex items-center justify-center w-10 h-10 text-gray-700 hover:text-gray-900 transition-colors"
-          >
-            <ShoppingBag className="w-6 h-6" />
-            {totalItems > 0 && (
-              <span className="absolute -top-1 -right-1 bg-black text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {totalItems}
-              </span>
-            )}
-          </Link>
+          {/* Right Side: Cart + Menu (grouped on mobile) */}
+          <div className="flex items-center gap-2 md:gap-0">
+            {/* Cart Icon */}
+            <Link
+              href="/cart"
+              className="relative flex items-center justify-center w-10 h-10 text-gray-700 hover:text-gray-900 transition-colors"
+            >
+              <ShoppingBag className="w-6 h-6" />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-black text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 text-gray-700"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden p-2 text-gray-700 -ml-1"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
