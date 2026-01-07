@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useCartStore } from '@/lib/store'
-import { Plus, Minus, ShoppingBag } from 'lucide-react'
+import { Plus, Minus, ShoppingBag, Check } from 'lucide-react'
 import type { Product } from '@/types/product'
 
 interface ProductDetailClientProps {
@@ -12,16 +12,33 @@ interface ProductDetailClientProps {
 export default function ProductDetailClient({ product }: ProductDetailClientProps) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0] || '')
   const [quantity, setQuantity] = useState(1)
+  const [isAdding, setIsAdding] = useState(false)
+  const [showSuccess, setShowSuccess] = useState(false)
+  const [sizeError, setSizeError] = useState(false)
   const addItem = useCartStore((state) => state.addItem)
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      alert('Please select a size')
+      setSizeError(true)
+      setTimeout(() => setSizeError(false), 2000)
       return
     }
 
+    setIsAdding(true)
+    
+    // Add item to cart
     addItem(product, selectedSize, quantity)
-    alert('Product added to cart!')
+    
+    // Show success animation
+    setTimeout(() => {
+      setIsAdding(false)
+      setShowSuccess(true)
+      
+      // Reset after 2 seconds
+      setTimeout(() => {
+        setShowSuccess(false)
+      }, 2000)
+    }, 300)
   }
 
   const incrementQuantity = () => {
@@ -47,15 +64,23 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       {/* Size Selection */}
       <div>
         <h3 className="font-semibold mb-3">Select Size</h3>
+        {sizeError && (
+          <p className="text-red-600 text-sm mb-2 animate-pulse">Please select a size</p>
+        )}
         <div className="flex flex-wrap gap-2">
           {product.sizes.map((size) => (
             <button
               key={size}
-              onClick={() => setSelectedSize(size)}
-              className={`px-6 py-2 border-2 rounded-lg font-medium transition-colors ${
+              onClick={() => {
+                setSelectedSize(size)
+                setSizeError(false)
+              }}
+              className={`px-6 py-2 border-2 rounded-lg font-medium transition-all ${
                 selectedSize === size
-                  ? 'border-gray-900 bg-gray-900 text-white'
-                  : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                  ? 'border-gray-900 bg-gray-900 text-white scale-105'
+                  : sizeError && !selectedSize
+                  ? 'border-red-300 bg-red-50 text-red-700'
+                  : 'border-gray-300 text-gray-700 hover:border-gray-400 hover:scale-105'
               }`}
             >
               {size}
@@ -89,10 +114,33 @@ export default function ProductDetailClient({ product }: ProductDetailClientProp
       {/* Add to Cart Button */}
       <button
         onClick={handleAddToCart}
-        className="w-full bg-gray-900 text-white py-4 rounded-lg font-semibold hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
+        disabled={isAdding || showSuccess}
+        className={`w-full py-4 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center gap-2 ${
+          showSuccess
+            ? 'bg-green-600 text-white scale-105'
+            : isAdding
+            ? 'bg-gray-600 text-white cursor-wait'
+            : 'bg-gray-900 text-white hover:bg-gray-800 hover:scale-[1.02] active:scale-95'
+        }`}
       >
-        <ShoppingBag className="w-5 h-5" />
-        Add to Cart
+        {showSuccess ? (
+          <>
+            <Check className="w-5 h-5 animate-in fade-in zoom-in duration-300" />
+            <span className="animate-in fade-in slide-in-from-right-2 duration-300">
+              Added to Cart!
+            </span>
+          </>
+        ) : isAdding ? (
+          <>
+            <ShoppingBag className="w-5 h-5 animate-spin" />
+            <span>Adding...</span>
+          </>
+        ) : (
+          <>
+            <ShoppingBag className="w-5 h-5" />
+            Add to Cart
+          </>
+        )}
       </button>
     </div>
   )
