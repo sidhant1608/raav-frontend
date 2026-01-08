@@ -9,11 +9,38 @@ import type { Product } from '@/types/product'
 
 async function getHomepageData() {
   try {
+    // Log environment check (only in development or when debugging)
+    if (process.env.NODE_ENV === 'development') {
+      console.log('Sanity Config:', {
+        projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'NOT SET',
+        dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'NOT SET',
+        apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || 'NOT SET',
+      })
+    }
+    
     const homepage = await client.fetch(homepageQuery)
     const featuredProducts = await client.fetch(featuredProductsQuery)
+    
+    // Log results for debugging
+    console.log('Fetched featured products:', featuredProducts?.length || 0)
+    
     return { homepage, featuredProducts }
   } catch (error) {
+    // Enhanced error logging
     console.error('Error fetching homepage data:', error)
+    if (error instanceof Error) {
+      console.error('Error message:', error.message)
+      console.error('Error stack:', error.stack)
+    }
+    
+    // Check if it's an environment variable issue
+    if (!process.env.NEXT_PUBLIC_SANITY_PROJECT_ID) {
+      console.error('⚠️ NEXT_PUBLIC_SANITY_PROJECT_ID is not set!')
+    }
+    if (!process.env.NEXT_PUBLIC_SANITY_DATASET) {
+      console.error('⚠️ NEXT_PUBLIC_SANITY_DATASET is not set!')
+    }
+    
     // Return empty data if fetch fails (e.g., missing env vars or network issue)
     return { homepage: null, featuredProducts: [] }
   }
@@ -78,6 +105,11 @@ export default async function Home() {
           ) : (
             <div className="text-center py-12">
               <p className="text-gray-500">No featured products available yet.</p>
+              {process.env.NODE_ENV === 'development' && (
+                <p className="text-xs text-gray-400 mt-2">
+                  Check console for debugging information
+                </p>
+              )}
             </div>
           )}
           <div className="text-center mt-12">
