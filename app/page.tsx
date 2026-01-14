@@ -1,3 +1,5 @@
+export const revalidate = 0 // keep homepage data fresh (featured products)
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { client } from '@/sanity/lib/client'
