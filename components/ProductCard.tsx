@@ -13,7 +13,12 @@ export default function ProductCard({ product }: ProductCardProps) {
   const mainImage = product.images?.[0]
   const imageUrl =
     mainImage && (mainImage as any).asset
-      ? urlForImage(mainImage).width(600).height(800).url()
+      ? urlForImage(mainImage)
+          .width(800)
+          .height(1000)
+          .auto('format')
+          .quality(85)
+          .url()
       : '/placeholder.jpg'
 
   return (
