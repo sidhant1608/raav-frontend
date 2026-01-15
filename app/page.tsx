@@ -52,9 +52,10 @@ export default async function Home() {
   const { homepage, featuredProducts } = await getHomepageData()
 
   const heroImage = homepage?.heroImages?.[0]
-  const heroImageUrl = heroImage
-    ? urlForImage(heroImage).width(1920).height(1080).url()
-    : null
+  const heroImageUrl =
+    heroImage && (heroImage as any).asset
+      ? urlForImage(heroImage).width(1920).height(1080).url()
+      : null
 
   return (
     <div className="min-h-screen">

@@ -11,7 +11,10 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const mainImage = product.images?.[0]
-  const imageUrl = mainImage ? urlForImage(mainImage).width(600).height(800).url() : '/placeholder.jpg'
+  const imageUrl =
+    mainImage && (mainImage as any).asset
+      ? urlForImage(mainImage).width(600).height(800).url()
+      : '/placeholder.jpg'
 
   return (
     <Link
@@ -19,7 +22,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="group block transition-transform hover:scale-[1.02]"
     >
       <div className="relative aspect-[3/4] overflow-hidden bg-gray-100">
-        {mainImage ? (
+        {imageUrl ? (
           <Image
             src={imageUrl}
             alt={product.name}

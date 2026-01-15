@@ -38,7 +38,7 @@ export default function ProductGallery({ images = [], name }: ProductGalleryProp
   }
 
   const imageUrl =
-    activeImage && activeImage.asset
+    activeImage && (activeImage as any).asset
       ? urlForImage(activeImage).width(1200).height(1500).url()
       : undefined
 
@@ -84,7 +84,7 @@ export default function ProductGallery({ images = [], name }: ProductGalleryProp
         <div className="grid grid-cols-4 sm:grid-cols-5 gap-3">
           {images.slice(0, 10).map((image, index) => {
             const thumbUrl =
-              image && image.asset
+              image && (image as any).asset
                 ? urlForImage(image).width(200).height(200).url()
                 : undefined
             const isActive = index === activeIndex

@@ -43,9 +43,11 @@ export default function CartPage() {
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
             {items.map((item) => {
-              const imageUrl = item.product.images?.[0]
-                ? urlForImage(item.product.images[0]).width(300).height(400).url()
-                : '/placeholder.jpg'
+              const mainImage = item.product.images?.[0]
+              const imageUrl =
+                mainImage && (mainImage as any).asset
+                  ? urlForImage(mainImage).width(300).height(400).url()
+                  : '/placeholder.jpg'
 
               return (
                 <div
